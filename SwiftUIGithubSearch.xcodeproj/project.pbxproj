@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AA5947B229B712E200C84427 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = AA5947B129B712E200C84427 /* Swinject */; };
+		AA5947B529B718C300C84427 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = AA5947B429B718C300C84427 /* Factory */; };
 		AAC7D7FF29B70A7F00E62354 /* SwiftUIGithubSearchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC7D7FE29B70A7F00E62354 /* SwiftUIGithubSearchApp.swift */; };
 		AAC7D80129B70A7F00E62354 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC7D80029B70A7F00E62354 /* ContentView.swift */; };
 		AAC7D80329B70A8000E62354 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAC7D80229B70A8000E62354 /* Assets.xcassets */; };
@@ -52,7 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA5947B229B712E200C84427 /* Swinject in Frameworks */,
+				AA5947B529B718C300C84427 /* Factory in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,7 +154,7 @@
 			);
 			name = SwiftUIGithubSearch;
 			packageProductDependencies = (
-				AA5947B129B712E200C84427 /* Swinject */,
+				AA5947B429B718C300C84427 /* Factory */,
 			);
 			productName = SwiftUIGithubSearch;
 			productReference = AAC7D7FB29B70A7F00E62354 /* SwiftUIGithubSearch.app */;
@@ -229,7 +229,7 @@
 			);
 			mainGroup = AAC7D7F229B70A7F00E62354;
 			packageReferences = (
-				AA5947AB29B7129E00C84427 /* XCRemoteSwiftPackageReference "Swinject" */,
+				AA5947B329B718C300C84427 /* XCRemoteSwiftPackageReference "Factory" */,
 			);
 			productRefGroup = AAC7D7FC29B70A7F00E62354 /* Products */;
 			projectDirPath = "";
@@ -601,21 +601,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		AA5947AB29B7129E00C84427 /* XCRemoteSwiftPackageReference "Swinject" */ = {
+		AA5947B329B718C300C84427 /* XCRemoteSwiftPackageReference "Factory" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Swinject/Swinject.git";
+			repositoryURL = "https://github.com/hmlongco/Factory";
 			requirement = {
 				kind = exactVersion;
-				version = 2.8.3;
+				version = 2.0.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		AA5947B129B712E200C84427 /* Swinject */ = {
+		AA5947B429B718C300C84427 /* Factory */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = AA5947AB29B7129E00C84427 /* XCRemoteSwiftPackageReference "Swinject" */;
-			productName = Swinject;
+			package = AA5947B329B718C300C84427 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = Factory;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

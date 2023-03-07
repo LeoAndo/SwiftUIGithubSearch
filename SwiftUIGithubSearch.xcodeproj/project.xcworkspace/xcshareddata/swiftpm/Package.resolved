@@ -1,12 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "swinject",
+      "identity" : "factory",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Swinject/Swinject.git",
+      "location" : "https://github.com/hmlongco/Factory",
       "state" : {
-        "revision" : "8bc503e60965298984fb58cf47b71c541449fe2a",
-        "version" : "2.8.3"
+        "revision" : "644d6d96469c63453a418510cd8819157ff78ba9",
+        "version" : "2.0.2"
       }
     }
   ],
