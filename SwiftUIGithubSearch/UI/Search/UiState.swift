@@ -8,7 +8,7 @@
 import Foundation
 
 enum UiState {
-    struct Data { let data: String}
+    struct Data { let repositories: [RepositorySummary]}
     case initial
     case loading
     case data(Data)

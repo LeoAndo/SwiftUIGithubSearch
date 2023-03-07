@@ -11,14 +11,8 @@ import Factory
 protocol APIClient {
     func fetch<R>(_ request: R) async throws -> R.ResponseEntity where R: APIRequest
 }
-//extension Factory.Name {
-//    static let github = Self("github")
-//}
 
 final class APIClientImpl: APIClient {
-
-    init() {
-    }
     func fetch<R>(_ request: R) async throws -> R.ResponseEntity where R : APIRequest {
         let (data, response) = try await URLSession.shared.data(for: request.asURLRequest())
         if let response = response as? HTTPURLResponse {
@@ -32,7 +26,6 @@ final class APIClientImpl: APIClient {
                 }
             }
         }
-        let typeObjects = try JSONDecoder().decode(R.ResponseEntity.self, from: data)
-        return typeObjects
+        return try JSONDecoder().decode(R.ResponseEntity.self, from: data)
     }
 }
