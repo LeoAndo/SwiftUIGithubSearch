@@ -8,19 +8,41 @@
 import SwiftUI
 
 struct SearchScreen: View {
+    @StateObject var viewModel: SearchViewModel
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        SearchScreenStateless(uiState: viewModel.uiState)
+    }
+}
+
+struct SearchScreenStateless: View {
+    let uiState: UiState
+    var body: some View {
+        switch self.uiState {
+        case .data(let model):
+            VStack(spacing: 20) {
+                Image(systemName: "globe")
+                    .imageScale(.large)
+                    .foregroundColor(.accentColor)
+                Text(model.data)
+            }
+            .padding()
+        case .initial:
+            EmptyView()
+        case .loading:
+            ProgressView("fetching…")
+                .progressViewStyle(CircularProgressViewStyle())
+        case .error(let message):
+            Text(message)
         }
-        .padding()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchScreen()
+        Group {
+            SearchScreenStateless(uiState: UiState.error("Error!!!!"))
+            SearchScreenStateless(uiState: UiState.loading)
+            SearchScreenStateless(uiState: UiState.initial)
+        }
     }
 }

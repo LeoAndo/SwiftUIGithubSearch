@@ -11,7 +11,7 @@ import SwiftUI
 struct SwiftUIGithubSearchApp: App {
     var body: some Scene {
         WindowGroup {
-            SearchScreen()
+            SearchScreen(viewModel: SearchViewModel())
         }
     }
 }
