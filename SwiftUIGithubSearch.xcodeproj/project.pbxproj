@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA5947B229B712E200C84427 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = AA5947B129B712E200C84427 /* Swinject */; };
 		AAC7D7FF29B70A7F00E62354 /* SwiftUIGithubSearchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC7D7FE29B70A7F00E62354 /* SwiftUIGithubSearchApp.swift */; };
 		AAC7D80129B70A7F00E62354 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC7D80029B70A7F00E62354 /* ContentView.swift */; };
 		AAC7D80329B70A8000E62354 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAC7D80229B70A8000E62354 /* Assets.xcassets */; };
@@ -51,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA5947B229B712E200C84427 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +73,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AA5947B029B712E200C84427 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AAC7D7F229B70A7F00E62354 = {
 			isa = PBXGroup;
 			children = (
@@ -78,6 +87,7 @@
 				AAC7D80E29B70A8100E62354 /* SwiftUIGithubSearchTests */,
 				AAC7D81829B70A8100E62354 /* SwiftUIGithubSearchUITests */,
 				AAC7D7FC29B70A7F00E62354 /* Products */,
+				AA5947B029B712E200C84427 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -143,6 +153,9 @@
 			dependencies = (
 			);
 			name = SwiftUIGithubSearch;
+			packageProductDependencies = (
+				AA5947B129B712E200C84427 /* Swinject */,
+			);
 			productName = SwiftUIGithubSearch;
 			productReference = AAC7D7FB29B70A7F00E62354 /* SwiftUIGithubSearch.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +228,9 @@
 				Base,
 			);
 			mainGroup = AAC7D7F229B70A7F00E62354;
+			packageReferences = (
+				AA5947AB29B7129E00C84427 /* XCRemoteSwiftPackageReference "Swinject" */,
+			);
 			productRefGroup = AAC7D7FC29B70A7F00E62354 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -583,6 +599,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AA5947AB29B7129E00C84427 /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject.git";
+			requirement = {
+				kind = exactVersion;
+				version = 2.8.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA5947B129B712E200C84427 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA5947AB29B7129E00C84427 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AAC7D7F329B70A7F00E62354 /* Project object */;
 }
