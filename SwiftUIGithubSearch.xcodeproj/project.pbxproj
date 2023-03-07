@@ -114,7 +114,6 @@
 		AA5947B629B71C5C00C84427 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				AA5947DF29B749E200C84427 /* Response */,
 				AA5947D729B7412300C84427 /* Repository */,
 				AA5947C029B71E1800C84427 /* API */,
 			);
@@ -206,6 +205,7 @@
 		AA5947DA29B7419200C84427 /* Github */ = {
 			isa = PBXGroup;
 			children = (
+				AA5947DF29B749E200C84427 /* Response */,
 				AA5947DB29B741AB00C84427 /* GithubService.swift */,
 			);
 			path = Github;
