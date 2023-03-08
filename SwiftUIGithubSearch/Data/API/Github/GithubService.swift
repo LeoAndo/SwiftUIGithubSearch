@@ -7,11 +7,19 @@
 
 import Foundation
 
-protocol GithubServiceRequest: APIRequest {}
+protocol GithubServiceRequest {
+    associatedtype ResponseEntity: Decodable
+    associatedtype ErrorResponseEntity: Decodable
+    var baseURL: String { get }
+    var method: HTTPMethod { get }
+    var path: String { get }
+    func asURLRequest() throws -> URLRequest
+}
 
 extension GithubServiceRequest {
-    var baseURL: String { APIBaseURL.github.value }
+    var baseURL: String { "https://api.github.com" }
     var apiKey: String  { "" } // TODO INPUT HERE GithubAccessToken
+    typealias ErrorResponseEntity = SearchRepositoriesResponse // TODO
 }
 
 enum GithubService {
@@ -35,13 +43,19 @@ enum GithubService {
                 URLQueryItem(name: "per_page", value: perPage),
                 URLQueryItem(name: "sort", value: sort)
             ]
-            var request = URLRequest(url: urlComponents.url!)
-            request.allHTTPHeaderFields = ["Accept": "application/vnd.github.v3+json"]
-            if(!apiKey.isEmpty) {
-                request.allHTTPHeaderFields = ["Authorization": "Bearer \(apiKey)"]
-            }
-            request.allHTTPHeaderFields = ["X-GitHub-Api-Version": "2022-11-28"]
+            var request = URLRequest(url: urlComponents.url!) // timeoutInterval: 0.0001
+            request.setHeaders(apiKey: apiKey)
             return request
         }
+    }
+}
+
+extension URLRequest {
+    mutating func setHeaders(apiKey: String) {
+        self.allHTTPHeaderFields = ["Accept": "application/vnd.github.v3+json"]
+        if(!apiKey.isEmpty) {
+            self.allHTTPHeaderFields = ["Authorization": "Bearer \(apiKey)"]
+        }
+        self.allHTTPHeaderFields = ["X-GitHub-Api-Version": "2022-11-28"]
     }
 }
