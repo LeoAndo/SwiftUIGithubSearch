@@ -24,12 +24,9 @@ final class GithubApiHttpClientImpl: GithubApiHttpClient {
             // 通信タイムアウトなどのエラーハンドリング - START
             let apiError: APIError
             if let error = error as? NSError, error.domain == NSURLErrorDomain {
-                if error.code == NSURLErrorTimedOut || error.code == NSURLErrorCannotFindHost {
-                    // NSURLErrorTimedOut: 接続タイムアウト
-                    // NSURLErrorCannotFindHost: ホストが見つからなかったため、接続に失敗
+                    // NSURLErrorTimedOut: 接続タイムアウト, NSURLErrorCannotFindHost: ホストが見つからなかったため、接続に失敗
                     apiError = .network(error.localizedDescription)
                     throw apiError
-                }
             } else {
                 apiError = .unexpected("unexpected: \(error.localizedDescription)")
                 throw apiError
