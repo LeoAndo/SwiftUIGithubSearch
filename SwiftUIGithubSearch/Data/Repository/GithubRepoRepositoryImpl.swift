@@ -9,9 +9,9 @@ import Foundation
 
 final class GithubRepoRepositoryImpl: GithubRepoRepository {
     
-    private var client: APIClient
+    private var client: GithubApiHttpClient
 
-    init(client: APIClient) {
+    init(client: GithubApiHttpClient) {
         self.client = client
     }
     func searchRepositories(query: String, page: Int) async throws -> [RepositorySummary] {

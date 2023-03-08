@@ -12,8 +12,6 @@ import Factory
 final class SearchViewModel : ObservableObject {
     @Published var uiState: UiState = UiState.initial
     private let repository = Container.shared.githubRepoRepository()
-    init() {
-    }
     func searchRepositories(query: String, page: Int) {
         Task {
             do {
@@ -22,7 +20,14 @@ final class SearchViewModel : ObservableObject {
                 self.uiState = UiState.data(UiState.Data(repositories:result))
             } catch {
                 guard let e =  error as? APIError else { return }
-                self.uiState = UiState.error(e.message)
+                switch(e) {
+                case .http(let code, let message):
+                    self.uiState = UiState.error("\(code) : \(message)")
+                case .unexpected(let message):
+                    self.uiState = UiState.error("\(message)")
+                case .network(let message): // 接続エラー
+                    self.uiState = UiState.error("\(message)")
+                }
             }
         }
     }
