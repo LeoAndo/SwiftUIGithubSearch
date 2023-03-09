@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RepositorySummary : Decodable, Identifiable {
+struct RepositorySummary : Decodable, Identifiable, Hashable {
     let id: Int
     let name: String
     let ownerName: String

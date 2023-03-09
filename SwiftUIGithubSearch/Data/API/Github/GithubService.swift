@@ -59,8 +59,8 @@ enum GithubService {
         }
         
         func asURLRequest() throws -> URLRequest {
-            var urlComponents = URLComponents(string: baseURL + path)!
-            var request = URLRequest(url: urlComponents.url!) // timeoutInterval: 0.0001
+            let urlComponents = URLComponents(string: baseURL + path)!
+            var request = URLRequest(url: urlComponents.url!)
             request.setHeaders(apiKey: apiKey)
             return request
         }

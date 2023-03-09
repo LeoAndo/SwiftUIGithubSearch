@@ -22,24 +22,26 @@ struct MainContent: View {
     let onSubmit: ((String) -> Void)
     @State var inputText = "" // TextFieldがBinding<String> に依存するのでStatelessにできない
     var body: some View {
-        VStack() {
-            TextField("キーワード", text: $inputText, prompt: Text("キーワードを入力してください"))
-                .onSubmit { onSubmit(inputText) }
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-            Spacer()
-            switch self.uiState {
-            case .initial:
-                EmptyView()
-            case .error(let message):
-                Text(message)
-            case .loading:
-                ProgressView("fetching…")
-                    .progressViewStyle(CircularProgressViewStyle())
-            case .data(let data):
-                ScucessView(repositories: data.repositories)
+        NavigationStack {
+            VStack() {
+                TextField("キーワード", text: $inputText, prompt: Text("キーワードを入力してください"))
+                    .onSubmit { onSubmit(inputText) }
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                Spacer()
+                switch self.uiState {
+                case .initial:
+                    EmptyView()
+                case .error(let message):
+                    Text(message)
+                case .loading:
+                    ProgressView("fetching…")
+                        .progressViewStyle(CircularProgressViewStyle())
+                case .data(let data):
+                    ScucessView(repositories: data.repositories)
+                }
+                Spacer()
             }
-            Spacer()
         }
     }
 }
@@ -49,22 +51,28 @@ struct ScucessView: View {
     let repositories: [RepositorySummary]
     var body: some View {
         VStack(spacing: 0) {
-            if !repositories.isEmpty {
+            if repositories.isEmpty {
+                Text("result empty...")
+            } else {
                 ScrollView(.vertical, showsIndicators: true) {
                     LazyVStack(spacing: 0) {
                         ForEach(repositories) { repository in
-                            VStack(alignment: .leading) {
-                                Text(repository.name)
-                                Text(repository.ownerName)
-                                Divider()
+                            // セル１行分のレイアウト - START
+                            NavigationLink(value: repository) {
+                                VStack(alignment: .leading) {
+                                    Text(repository.name)
+                                    Text(repository.ownerName)
+                                    Divider()
+                                }
+                                .frame(maxWidth: .infinity)
+                                .padding([.leading, .trailing], 8)
                             }
-                            .frame(maxWidth: .infinity)
-                            .padding([.leading, .trailing], 8)
+                            // セル１行分のレイアウト - END
                         }
+                    }.navigationDestination(for: RepositorySummary.self) { repository in
+                        DetailScreen(name: repository.name, ownerName: repository.ownerName)
                     }
                 }
-            } else {
-                Text("result empty...")
             }
         }
     }
