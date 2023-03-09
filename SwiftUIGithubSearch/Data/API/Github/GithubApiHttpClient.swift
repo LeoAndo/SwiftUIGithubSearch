@@ -21,7 +21,7 @@ final class GithubApiHttpClientImpl: GithubApiHttpClient {
         do {
             (data, response) =  try await URLSession.shared.data(for: request.asURLRequest())
         } catch {
-            // 通信タイムアウトなどのエラーハンドリング - START
+            // 通信タイムアウトなどの接続エラーハンドリング - START
             let apiError: APIError
             if let error = error as? NSError, error.domain == NSURLErrorDomain {
                     // NSURLErrorTimedOut: 接続タイムアウト, NSURLErrorCannotFindHost: ホストが見つからなかったため、接続に失敗
@@ -31,7 +31,7 @@ final class GithubApiHttpClientImpl: GithubApiHttpClient {
                 apiError = .unexpected("unexpected: \(error.localizedDescription)")
                 throw apiError
             }
-            // 通信タイムアウトなどのエラーハンドリング - END
+            // 通信タイムアウトなどの接続エラーハンドリング - END
         }
         
         // http status code 200以外のエラーハンドリング - START

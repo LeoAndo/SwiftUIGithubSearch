@@ -18,7 +18,6 @@ struct RepositoryDetailResponse : Decodable {
     struct Owner : Decodable {
         let avatar_url: String
         let id: Int
-        let node_id: Int
     }
 }
 
@@ -26,11 +25,11 @@ extension RepositoryDetailResponse {
     func toModel() -> RepositoryDetail {
         RepositoryDetail(
             name: self.name,
-            owner_avatar_url: self.owner.avatar_url,
-            stargazers_count: self.stargazers_count,
-            forks_count: self.forks_count,
-            open_issues_count: self.open_issues_count,
-            watchers_count: self.watchers_count,
+            ownerAvatarUrl: self.owner.avatar_url,
+            stargazersCount: self.stargazers_count,
+            forksCount: self.forks_count,
+            openIssuesCount: self.open_issues_count,
+            watchersCount: self.watchers_count,
             language: self.language,
             description: self.description
         )

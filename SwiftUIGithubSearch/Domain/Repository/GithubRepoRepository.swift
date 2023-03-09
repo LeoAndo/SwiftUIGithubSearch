@@ -9,5 +9,5 @@ import Foundation
 
 protocol GithubRepoRepository {
     func searchRepositories(query: String, page: Int) async throws -> [RepositorySummary]
-    func fetchRepositoryDetail(ownerName: String, repositoryName: String) async throws -> RepositoryDetail
+    func getRepositoryDetail(ownerName: String, repositoryName: String) async throws -> RepositoryDetail
 }

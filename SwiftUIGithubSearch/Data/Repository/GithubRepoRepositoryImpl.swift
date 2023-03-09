@@ -15,7 +15,7 @@ final class GithubRepoRepositoryImpl: GithubRepoRepository {
     func searchRepositories(query: String, page: Int) async throws -> [RepositorySummary] {
         try await client.fetch(GithubService.SearchRepositories(query, page)).toModels()
     }
-    func fetchRepositoryDetail(ownerName: String, repositoryName: String) async throws -> RepositoryDetail {
+    func getRepositoryDetail(ownerName: String, repositoryName: String) async throws -> RepositoryDetail {
         try await client.fetch(GithubService.FetchRepositoryDetail(ownerName, repositoryName)).toModel()
     }
 }

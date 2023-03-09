@@ -6,11 +6,11 @@
 //
 struct RepositoryDetail: Decodable {
     let name: String
-    let owner_avatar_url: String
-    let stargazers_count: Int
-    let forks_count: Int
-    let open_issues_count: Int
-    let watchers_count: Int
+    let ownerAvatarUrl: String
+    let stargazersCount: Int
+    let forksCount: Int
+    let openIssuesCount: Int
+    let watchersCount: Int
     let language: String?
     let description: String?
 }
