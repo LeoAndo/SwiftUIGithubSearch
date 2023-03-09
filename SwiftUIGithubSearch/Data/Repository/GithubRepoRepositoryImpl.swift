@@ -8,13 +8,14 @@
 import Foundation
 
 final class GithubRepoRepositoryImpl: GithubRepoRepository {
-    
     private var client: GithubApiHttpClient
-
     init(client: GithubApiHttpClient) {
         self.client = client
     }
     func searchRepositories(query: String, page: Int) async throws -> [RepositorySummary] {
-        try await client.fetch(GithubService.SearchRepositories(query: query, page: page)).toModels()
+        try await client.fetch(GithubService.SearchRepositories(query, page)).toModels()
+    }
+    func fetchRepositoryDetail(ownerName: String, repositoryName: String) async throws -> RepositoryDetail {
+        try await client.fetch(GithubService.FetchRepositoryDetail(ownerName, repositoryName)).toModel()
     }
 }

@@ -9,7 +9,6 @@ import Foundation
 
 protocol GithubServiceRequest {
     associatedtype ResponseEntity: Decodable
-    associatedtype ErrorResponseEntity: Decodable
     var baseURL: String { get }
     var method: HTTPMethod { get }
     var path: String { get }
@@ -19,7 +18,6 @@ protocol GithubServiceRequest {
 extension GithubServiceRequest {
     var baseURL: String { "https://api.github.com" }
     var apiKey: String  { "" } // TODO INPUT HERE GithubAccessToken
-    typealias ErrorResponseEntity = SearchRepositoriesResponse // TODO
 }
 
 enum GithubService {
@@ -28,13 +26,13 @@ enum GithubService {
         let page: String
         let perPage: String = "20"
         let sort: String = "stars"
-        init(query: String, page: Int) {
+        init(_ query: String, _ page: Int) {
             self.query = query
             self.page = String(page)
         }
         typealias ResponseEntity = SearchRepositoriesResponse
         var method: HTTPMethod { .get }
-        var path: String = "/search/repositories"
+        var path: String { "/search/repositories" }
         func asURLRequest() throws -> URLRequest {
             var urlComponents = URLComponents(string: baseURL + path)!
             urlComponents.queryItems = [
@@ -43,6 +41,25 @@ enum GithubService {
                 URLQueryItem(name: "per_page", value: perPage),
                 URLQueryItem(name: "sort", value: sort)
             ]
+            var request = URLRequest(url: urlComponents.url!) // timeoutInterval: 0.0001
+            request.setHeaders(apiKey: apiKey)
+            return request
+        }
+    }
+    struct FetchRepositoryDetail: GithubServiceRequest {
+        typealias ResponseEntity = RepositoryDetailResponse
+        let ownerName: String
+        let repositoryName: String
+        var method: HTTPMethod { .get }
+        var path: String { "/repos/\(ownerName)/\(repositoryName)" }
+        
+        init(_ ownerName: String, _ repositoryName: String) {
+            self.ownerName = ownerName
+            self.repositoryName = repositoryName
+        }
+        
+        func asURLRequest() throws -> URLRequest {
+            var urlComponents = URLComponents(string: baseURL + path)!
             var request = URLRequest(url: urlComponents.url!) // timeoutInterval: 0.0001
             request.setHeaders(apiKey: apiKey)
             return request

@@ -18,4 +18,7 @@ final class FakeGithubRepoRepository: GithubRepoRepository {
     func searchRepositories(query: String, page: Int) async throws -> [RepositorySummary] {
          successData
     }
+    func fetchRepositoryDetail(ownerName: String, repositoryName: String) async throws -> RepositoryDetail {
+        RepositoryDetail(name: "repoName01", owner_avatar_url: "https://avatars.githubusercontent.com/u/5429470?v=4", stargazers_count: 100, forks_count: 200, open_issues_count: 300, watchers_count: 400, language: "Dart", description: "flutter description01")
+    }
 }
