@@ -25,7 +25,7 @@ https://user-images.githubusercontent.com/16476224/224213651-941fcc79-b0ef-4450-
 
 ## 検索結果: データ0件
 
-https://user-images.githubusercontent.com/16476224/224213963-f5da4fe2-013e-4606-95f3-b048f98a6c19.mp4
+https://user-images.githubusercontent.com/16476224/224241336-cf9fb28a-6f21-4b23-8a93-9306e4e7f3fe.mp4
 
 ## 異常系: エラーからの復旧
 
