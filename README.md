@@ -1,5 +1,5 @@
 # 概要
-Native iOS (SwiftUI)で作るGithubリポジトリ検索アプリ 
+Native iOS (SwiftUI)で作るGithubリポジトリ検索アプリ
 
 # アーキテクチャ
 [Wiki](https://github.com/LeoAndo/SwiftUIGithubSearch/wiki/architecture)にまとめています
