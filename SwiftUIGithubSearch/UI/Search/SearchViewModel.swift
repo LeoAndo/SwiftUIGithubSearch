@@ -10,25 +10,43 @@ import Factory
 
 @MainActor
 final class SearchViewModel : ObservableObject {
-    @Published var uiState: UiState = UiState.initial
+    @Published var uiState: SearchUiState = SearchUiState()
     private let repository = Container.shared.githubRepoRepository()
-    func searchRepositories(query: String, page: Int) {
+    
+    func searchRepositories(query: String, page: Int = 1, refresh: Bool = false) {
         Task {
+            var repositories = uiState.repositories
+            if refresh {
+                repositories = []
+            }
+            
             do {
-                uiState = UiState.loading
-                let result = try await repository.searchRepositories(query: query, page: page)
-                self.uiState = UiState.data(UiState.Data(repositories:result))
+                // if (query.isEmpty) { throw const InputValidationException("please input search word."); }
+                stepToLoadingState(repositories)
+                let newItems = try await repository.searchRepositories(query: query, page: page)
+                let isLastPage = newItems.count < GithubService.SearchRepositories.PER_PAGE
+                stepToData(newItems, isLastPage, page)
             } catch {
                 guard let e =  error as? APIError else { return }
-                switch(e) {
-                case .http(let code, let message):
-                    self.uiState = UiState.error("\(code) : \(message)")
-                case .unexpected(let message):
-                    self.uiState = UiState.error("\(message)")
-                case .network(let message): // 接続エラー
-                    self.uiState = UiState.error("\(message)")
-                }
+                stepToError(repositories, e)
             }
         }
+    }
+    
+    private func stepToLoadingState(_ repositories: [RepositorySummary]) {
+        uiState = SearchUiState(repositories: repositories, isLoading: true, apiError: nil)
+    }
+    
+    private func stepToData(_ newItems: [RepositorySummary], _ isLastPage: Bool, _ page: Int) {
+        if (isLastPage) {
+            uiState = SearchUiState(isFirstFetched: true, repositories: uiState.repositories + newItems, nextPageNo: nil, isLoading: false, apiError: nil)
+        } else {
+            let nextPageNo = page + 1
+            uiState = SearchUiState(isFirstFetched: true, repositories: uiState.repositories + newItems, nextPageNo: nextPageNo, isLoading: false, apiError: nil)
+        }
+    }
+    
+    private func stepToError(_ repositories: [RepositorySummary], _ e: APIError) {
+        uiState = SearchUiState(repositories: repositories, isLoading: false, apiError: e)
     }
 }

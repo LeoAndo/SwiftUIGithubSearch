@@ -22,9 +22,10 @@ extension GithubServiceRequest {
 
 enum GithubService {
     struct SearchRepositories: GithubServiceRequest {
+        static let PER_PAGE = 20
         let query: String
         let page: String
-        let perPage: String = "20"
+        let perPage: String = String(PER_PAGE)
         let sort: String = "stars"
         init(_ query: String, _ page: Int) {
             self.query = query
