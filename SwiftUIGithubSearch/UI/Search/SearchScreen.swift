@@ -41,26 +41,29 @@ struct MainContent: View {
                     if let apiError = uiState.apiError { // アンラップ
                         switch(apiError) {
                         case .http(let code, let message):
-                            // AppError(message: "\(code): \(message)") { onReload(inputText) }
                             AppAlertDialog(openDialog: true, title: "\(code.rawValue) : \(code)", positiveButtonText: "Reload", message: message, onNegativeButtonTap: {}, onPositiveButtonTap: {
                                 onReload(inputText)
                             })
                         case .network(let message), .unexpected(let message):
-                            // AppError(message: message) { onReload(inputText) }
                             AppAlertDialog(openDialog: true, title:"Fetch Error", positiveButtonText: "Reload", message: message, onNegativeButtonTap: {}, onPositiveButtonTap: {
                                 onReload(inputText)
                             })
+                        case .input(let message):
+                            AppAlertDialog(openDialog: true, title:"Validation Error", positiveButtonText: "OK", message: message, onNegativeButtonTap: {}, onPositiveButtonTap: { })
                         }
                     }
+                    
                     // ローディングView
                     if uiState.isLoading {
                         ProgressView("fetching…")
                             .progressViewStyle(CircularProgressViewStyle())
                     }
+                    
                     // データ件数0件表示View
                     if uiState.isFirstFetched && uiState.repositories.isEmpty {
                         Text("result empty...")
                     }
+                    
                     // データ取得成功時のListView
                     ScucessView(repositories: uiState.repositories, onMoreLoad: {
                         if uiState.nextPageNo != nil { // nextPageNoがnilの場合次ページはない
@@ -148,6 +151,8 @@ struct ContentView_Previews: PreviewProvider {
             MainContent(uiState: SearchUiState(isFirstFetched: false, apiError: .network("network error....")), onSubmit: {_ in }, inputText: "Flutter", onReload: {_ in },onMoreLoad:{_ in })
             // 異常系: 初回 httpエラー
             MainContent(uiState: SearchUiState(isFirstFetched: false, apiError: .http(HTTPStatusCode.unauthorized, "Bad Credentials")), onSubmit: {_ in }, inputText: "Flutter", onReload: {_ in },onMoreLoad:{_ in })
+            // 異常系: 初回 入力バリデーション
+            MainContent(uiState: SearchUiState(isFirstFetched: false, apiError: .input("please input search word.")), onSubmit: {_ in }, inputText: "", onReload: {_ in },onMoreLoad:{_ in })
         }
     }
 }

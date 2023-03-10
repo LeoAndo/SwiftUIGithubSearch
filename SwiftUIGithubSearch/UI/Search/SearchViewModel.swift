@@ -21,7 +21,9 @@ final class SearchViewModel : ObservableObject {
             }
             
             do {
-                // if (query.isEmpty) { throw const InputValidationException("please input search word."); }
+                if query.isEmpty {
+                    throw APIError.input("please input search word.")
+                }
                 stepToLoadingState(repositories)
                 let newItems = try await repository.searchRepositories(query: query, page: page)
                 let isLastPage = newItems.count < GithubService.SearchRepositories.PER_PAGE
