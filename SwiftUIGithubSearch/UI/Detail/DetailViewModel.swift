@@ -24,9 +24,7 @@ final class DetailViewModel : ObservableObject {
                 switch(e) {
                 case .http(let code, let message):
                     self.uiState = DetailUiState.error("\(code) : \(message)")
-                case .unexpected(let message):
-                    self.uiState = DetailUiState.error("\(message)")
-                case .network(let message): // 接続エラー
+                case .unexpected(let message), .network(let message), .input(let message):
                     self.uiState = DetailUiState.error("\(message)")
                 }
             }
