@@ -22,33 +22,33 @@ final class SearchViewModel : ObservableObject {
             
             do {
                 if query.isEmpty {
-                    throw APIError.input("please input search word.")
+                    throw ValidationError.empty("please input search word.")
                 }
                 stepToLoadingState(repositories)
                 let newItems = try await repository.searchRepositories(query: query, page: page)
                 let isLastPage = newItems.count < GithubService.SearchRepositories.PER_PAGE
                 stepToData(newItems, isLastPage, page)
             } catch {
-                guard let e =  error as? APIError else { return }
+                guard let e =  error as? ApplicationError else { return }
                 stepToError(repositories, e)
             }
         }
     }
     
     private func stepToLoadingState(_ repositories: [RepositorySummary]) {
-        uiState = SearchUiState(repositories: repositories, isLoading: true, apiError: nil)
+        uiState = SearchUiState(repositories: repositories, isLoading: true, applicationError: nil)
     }
     
     private func stepToData(_ newItems: [RepositorySummary], _ isLastPage: Bool, _ page: Int) {
         if (isLastPage) {
-            uiState = SearchUiState(isFirstFetched: true, repositories: uiState.repositories + newItems, nextPageNo: nil, isLoading: false, apiError: nil)
+            uiState = SearchUiState(isFirstFetched: true, repositories: uiState.repositories + newItems, nextPageNo: nil, isLoading: false, applicationError: nil)
         } else {
             let nextPageNo = page + 1
-            uiState = SearchUiState(isFirstFetched: true, repositories: uiState.repositories + newItems, nextPageNo: nextPageNo, isLoading: false, apiError: nil)
+            uiState = SearchUiState(isFirstFetched: true, repositories: uiState.repositories + newItems, nextPageNo: nextPageNo, isLoading: false, applicationError: nil)
         }
     }
     
-    private func stepToError(_ repositories: [RepositorySummary], _ e: APIError) {
-        uiState = SearchUiState(repositories: repositories, isLoading: false, apiError: e)
+    private func stepToError(_ repositories: [RepositorySummary], _ e: ApplicationError) {
+        uiState = SearchUiState(repositories: repositories, isLoading: false, applicationError: e)
     }
 }
