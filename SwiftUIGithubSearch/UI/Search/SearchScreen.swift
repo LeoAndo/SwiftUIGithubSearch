@@ -54,7 +54,10 @@ struct MainContent: View {
                         if let validationError = applicationError as? ValidationError {
                             switch(validationError){
                             case .empty(let message):
-                                AppAlertDialog(openDialog: true, title:"Validation Error", positiveButtonText: "OK", message: message, onNegativeButtonTap: {}, onPositiveButtonTap: { })
+                                Text(message)
+                                    .frame(maxWidth: .infinity)
+                                    .foregroundColor(.red)
+                                    .lineLimit(1)
                             }
                         }
                     }
