@@ -8,13 +8,8 @@
 import Foundation
 import Factory
 
-// fetchするHttpClientは各APIごとに用意するのが良さそう
-protocol GithubApiHttpClient {
-    func fetch<R>(_ request: R) async throws -> R.ResponseEntity where R: GithubServiceRequest
-}
-
-final class GithubApiHttpClientImpl: GithubApiHttpClient {
-    func fetch<R>(_ request: R) async throws -> R.ResponseEntity where R : GithubServiceRequest {
+final class GithubHttpClient: HttpClient {
+    func fetch<R>(_ request: R) async throws -> R.ResponseEntity where R : ApiRequest {
         var data: Data?
         var response: URLResponse?
         
