@@ -8,7 +8,7 @@
 import Foundation
 import Factory
 
-final class GithubApiHttpClientImpl: HttpClient {
+final class GithubHttpClient: HttpClient {
     func fetch<R>(_ request: R) async throws -> R.ResponseEntity where R : ApiRequest {
         var data: Data?
         var response: URLResponse?

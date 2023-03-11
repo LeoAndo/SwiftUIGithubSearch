@@ -6,6 +6,7 @@
 //
 import Foundation
 
+/// 実装は各APIごとに用意する
 protocol ApiRequest {
     associatedtype ResponseEntity: Decodable
     var baseURL: String { get }
