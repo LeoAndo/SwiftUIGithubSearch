@@ -8,8 +8,8 @@
 import Foundation
 
 final class GithubRepoRepositoryImpl: GithubRepoRepository {
-    private var client: HttpClient
-    init(_ client: HttpClient) {
+    private var client: GithubApiHttpClient
+    init(client: GithubApiHttpClient) {
         self.client = client
     }
     func searchRepositories(query: String, page: Int) async throws -> [RepositorySummary] {
