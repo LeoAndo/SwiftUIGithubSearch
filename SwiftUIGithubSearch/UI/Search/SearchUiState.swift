@@ -13,13 +13,13 @@ struct SearchUiState {
     var repositories: [RepositorySummary]
     var nextPageNo: Int?
     var isLoading: Bool
-    var apiError: APIError?
+    var applicationError: ApplicationError?
     
-    init(isFirstFetched: Bool = false, repositories: [RepositorySummary] = [], nextPageNo: Int? = 1, isLoading: Bool = false, apiError: APIError? = nil) {
+    init(isFirstFetched: Bool = false, repositories: [RepositorySummary] = [], nextPageNo: Int? = 1, isLoading: Bool = false, applicationError: ApplicationError? = nil) {
         self.isFirstFetched = isFirstFetched
         self.repositories = repositories
         self.nextPageNo = nextPageNo
         self.isLoading = isLoading
-        self.apiError = apiError
+        self.applicationError = applicationError
     }
 }

@@ -38,18 +38,24 @@ struct MainContent: View {
                 
                 ZStack {
                     // エラー表示View
-                    if let apiError = uiState.apiError { // アンラップ
-                        switch(apiError) {
-                        case .http(let code, let message):
-                            AppAlertDialog(openDialog: true, title: "\(code.rawValue) : \(code)", positiveButtonText: "Reload", message: message, onNegativeButtonTap: {}, onPositiveButtonTap: {
-                                onReload(inputText)
-                            })
-                        case .network(let message), .unexpected(let message):
-                            AppAlertDialog(openDialog: true, title:"Fetch Error", positiveButtonText: "Reload", message: message, onNegativeButtonTap: {}, onPositiveButtonTap: {
-                                onReload(inputText)
-                            })
-                        case .input(let message):
-                            AppAlertDialog(openDialog: true, title:"Validation Error", positiveButtonText: "OK", message: message, onNegativeButtonTap: {}, onPositiveButtonTap: { })
+                    if let applicationError = uiState.applicationError { // アンラップ
+                        if let apiError = applicationError as? APIError {
+                            switch(apiError) {
+                            case .http(let code, let message):
+                                AppAlertDialog(openDialog: true, title: "\(code.rawValue) : \(code)", positiveButtonText: "Reload", message: message, onNegativeButtonTap: {}, onPositiveButtonTap: {
+                                    onReload(inputText)
+                                })
+                            case .network(let message), .unexpected(let message):
+                                AppAlertDialog(openDialog: true, title:"Fetch Error", positiveButtonText: "Reload", message: message, onNegativeButtonTap: {}, onPositiveButtonTap: {
+                                    onReload(inputText)
+                                })
+                            }
+                        }
+                        if let validationError = applicationError as? ValidationError {
+                            switch(validationError){
+                            case .empty(let message):
+                                AppAlertDialog(openDialog: true, title:"Validation Error", positiveButtonText: "OK", message: message, onNegativeButtonTap: {}, onPositiveButtonTap: { })
+                            }
                         }
                     }
                     
@@ -146,13 +152,13 @@ struct ContentView_Previews: PreviewProvider {
             MainContent(uiState:SearchUiState(isFirstFetched: true), onSubmit: {_ in }, inputText: "Flutter", onReload: {_ in },onMoreLoad:{_ in })
             
             // 異常系: データあり
-            MainContent(uiState: SearchUiState(isFirstFetched: true, repositories: successData, apiError: .network("network error....")), onSubmit: {_ in }, inputText: "Flutter", onReload: {_ in },onMoreLoad:{_ in })
+            MainContent(uiState: SearchUiState(isFirstFetched: true, repositories: successData, applicationError: APIError.network("network error....")), onSubmit: {_ in }, inputText: "Flutter", onReload: {_ in },onMoreLoad:{_ in })
             // 異常系: 初回 ネットワークエラー
-            MainContent(uiState: SearchUiState(isFirstFetched: false, apiError: .network("network error....")), onSubmit: {_ in }, inputText: "Flutter", onReload: {_ in },onMoreLoad:{_ in })
+            MainContent(uiState: SearchUiState(isFirstFetched: false, applicationError: APIError.network("network error....")), onSubmit: {_ in }, inputText: "Flutter", onReload: {_ in },onMoreLoad:{_ in })
             // 異常系: 初回 httpエラー
-            MainContent(uiState: SearchUiState(isFirstFetched: false, apiError: .http(HTTPStatusCode.unauthorized, "Bad Credentials")), onSubmit: {_ in }, inputText: "Flutter", onReload: {_ in },onMoreLoad:{_ in })
+            MainContent(uiState: SearchUiState(isFirstFetched: false, applicationError: APIError.http(HTTPStatusCode.unauthorized, "Bad Credentials")), onSubmit: {_ in }, inputText: "Flutter", onReload: {_ in },onMoreLoad:{_ in })
             // 異常系: 初回 入力バリデーション
-            MainContent(uiState: SearchUiState(isFirstFetched: false, apiError: .input("please input search word.")), onSubmit: {_ in }, inputText: "", onReload: {_ in },onMoreLoad:{_ in })
+            MainContent(uiState: SearchUiState(isFirstFetched: false, applicationError: ValidationError.empty("please input search word.")), onSubmit: {_ in }, inputText: "", onReload: {_ in },onMoreLoad:{_ in })
         }
     }
 }

@@ -20,12 +20,15 @@ final class DetailViewModel : ObservableObject {
                 let result = try await repository.getRepositoryDetail(ownerName: ownerName, repositoryName: name)
                 self.uiState = DetailUiState.data(DetailUiState.Data(detail:result))
             } catch {
-                guard let e =  error as? APIError else { return }
-                switch(e) {
-                case .http(let code, let message):
-                    self.uiState = DetailUiState.error("\(code) : \(message)")
-                case .unexpected(let message), .network(let message), .input(let message):
-                    self.uiState = DetailUiState.error("\(message)")
+                if let apiError = error as? APIError {
+                    switch(apiError) {
+                    case .http(let code, let message):
+                        self.uiState = DetailUiState.error("\(code) : \(message)")
+                    case .network(let message), .unexpected(let message):
+                        self.uiState = DetailUiState.error("\(message)")
+                    }
+                } else {
+                    self.uiState = DetailUiState.error(error.localizedDescription)
                 }
             }
         }
