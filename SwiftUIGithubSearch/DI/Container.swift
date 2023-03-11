@@ -9,10 +9,10 @@ import Foundation
 import Factory
 
 extension Container {
-    var githubHttpClient: Factory<HttpClient> {
+    var apiClient: Factory<GithubApiHttpClient> {
         self { GithubApiHttpClientImpl() }
     }
     var githubRepoRepository: Factory<GithubRepoRepository> {
-        self { GithubRepoRepositoryImpl(self.githubHttpClient()) }
+        self { GithubRepoRepositoryImpl(client: self.apiClient()) }
     }
 }

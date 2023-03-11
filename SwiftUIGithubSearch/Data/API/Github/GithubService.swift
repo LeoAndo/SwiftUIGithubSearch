@@ -7,7 +7,13 @@
 
 import Foundation
 
-protocol GithubServiceRequest: ApiRequest { }
+protocol GithubServiceRequest {
+    associatedtype ResponseEntity: Decodable
+    var baseURL: String { get }
+    var method: HTTPMethod { get }
+    var path: String { get }
+    func asURLRequest() throws -> URLRequest
+}
 
 extension GithubServiceRequest {
     var baseURL: String { "https://api.github.com" }
